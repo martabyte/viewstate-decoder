@@ -18,15 +18,15 @@ if(not args.encoded_vs and not args.vs_filename):
 else:
     # Check if the input is given in the command line
     if (args.encoded_vs):
-        encoded_vs = args.encoded_vs()
+        encoded_vs = args.encoded_vs
     else: # If not, we have the input inside a file with name: args.vs_filename
         input_file = open(args.vs_filename, 'r')
         encoded_vs = input_file.read()
         input_file.close()
 
         # Convert the URL encoded input into Base64 only (URL decode)
-        encoded_vs = urllib.parse.unquote(encoded_vs) 
-        
+        encoded_vs = urllib.parse.unquote(encoded_vs)
+
     #Create ViewState object
     vs = ViewState(encoded_vs)
     decoded_vs = vs.decode()
@@ -35,7 +35,7 @@ else:
 
     #Write to output file
     output_file = open(args.output_filename, 'w')
-    output_file.write('Decoded Viewstate: 'str(decoded_vs)) # We must set it as 'string' to write it because it's a tuple, not a string
+    output_file.write('Decoded Viewstate: ' + str(decoded_vs)) # We must set it as 'string' to write it because it's a tuple, not a string
     output_file.write('\n ViewState HMAC Signature Type: ' + hmac)
     output_file.write('\n ViewState HMAC Signature: ' + str(sign))
     output_file.close()
